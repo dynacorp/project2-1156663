@@ -2,6 +2,7 @@ package com.example.project2_info_6124.ui.map
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,25 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return rootView
     }
 
+//    override fun onMapReady(map: GoogleMap) {
+//        googleMap = map ?: return
+//
+//        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+//            googleMap.isMyLocationEnabled = true
+//
+//            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+//                if (location != null) {
+//                    val currentLatLng = LatLng(location.latitude, location.longitude)
+//                    val markerOptions = MarkerOptions().position(currentLatLng).title("Current Location")
+//
+//                    googleMap.addMarker(markerOptions)
+//                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+//                }
+//            }
+//        }
+//    }
+
+
     override fun onMapReady(map: GoogleMap) {
         googleMap = map ?: return
 
@@ -47,12 +67,42 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val currentLatLng = LatLng(location.latitude, location.longitude)
                     val markerOptions = MarkerOptions().position(currentLatLng).title("Current Location")
 
-                    googleMap.addMarker(markerOptions)
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+                    val geocoder = Geocoder(requireContext())
+                    val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+
+                    if (addresses != null) {
+                        if (addresses.isNotEmpty()) {
+                            val address = addresses[0]
+                            markerOptions.snippet("Lat: ${location.latitude}, Lng: ${location.longitude}\nAddress: ${address.getAddressLine(0)}")
+                        } else {
+                            markerOptions.snippet("Lat: ${location.latitude}, Lng: ${location.longitude}")
+                        }
+                    }
+
+                    val marker = googleMap.addMarker(markerOptions)
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+
+                    googleMap.setOnMarkerClickListener { clickedMarker ->
+                        if (clickedMarker == marker) {
+                            clickedMarker.showInfoWindow()
+                            true
+                        } else {
+                            false
+                        }
+                    }
+
+//                    marker?.let {
+//                        it.tag = location // You can use tag to store additional data if needed
+//                        it.showInfoWindow()
+//                    }
                 }
             }
+        } else {
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 44);
         }
     }
+
+
 
     override fun onResume() {
         super.onResume()
