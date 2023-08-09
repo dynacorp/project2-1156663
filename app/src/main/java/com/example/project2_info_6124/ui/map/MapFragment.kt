@@ -37,24 +37,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return rootView
     }
 
-//    override fun onMapReady(map: GoogleMap) {
-//        googleMap = map ?: return
-//
-//        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            googleMap.isMyLocationEnabled = true
-//
-//            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-//                if (location != null) {
-//                    val currentLatLng = LatLng(location.latitude, location.longitude)
-//                    val markerOptions = MarkerOptions().position(currentLatLng).title("Current Location")
-//
-//                    googleMap.addMarker(markerOptions)
-//                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-//                }
-//            }
-//        }
-//    }
-
 
     override fun onMapReady(map: GoogleMap) {
         googleMap = map ?: return
@@ -90,11 +72,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                             false
                         }
                     }
-
-//                    marker?.let {
-//                        it.tag = location // You can use tag to store additional data if needed
-//                        it.showInfoWindow()
-//                    }
                 }
             }
         } else {

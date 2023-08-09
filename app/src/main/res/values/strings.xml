@@ -11,4 +11,13 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_map">Map</string>
+    <string name="menu_places">Places</string>
+    <string name="menu_email">Email</string>
+    <string name="menu_about">About</string>
+    <string name="GOOGLE_MAP_API_KEY">AIzaSyBJWVYo0I-rOXDPn-lii8aKZdt_UWO3eNc</string>
+    <string name="about_title">About APP</string>
+    <string name="about_user_id">1156663</string>
+    <string name="about_user_name">Ayomide Emmanuel Olopha</string>
+    <string name="about_user_title">Names of Users</string>
+    <string name="about_description">The app is about project-2 for INFO-6124. This app enables the user to get their current location and also has the feature of sending it to email.</string>
 </resources>
